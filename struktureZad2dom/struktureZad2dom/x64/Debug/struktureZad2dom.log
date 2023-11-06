@@ -1,4 +1,4 @@
 ﻿  Source.c
-C:\Users\borna\OneDrive\Radna površina\git\strukture\struktureZad2dom\struktureZad2dom\Source.c(174): warning C4715: 'upisiza': not all control paths return a value
-C:\Users\borna\OneDrive\Radna površina\git\strukture\struktureZad2dom\struktureZad2dom\Source.c(208): warning C4715: 'upisispred': not all control paths return a value
+C:\Users\borna\OneDrive\Radna površina\git\strukture\struktureZad2dom\struktureZad2dom\Source.c(187): warning C4715: 'upisiza': not all control paths return a value
+C:\Users\borna\OneDrive\Radna površina\git\strukture\struktureZad2dom\struktureZad2dom\Source.c(224): warning C4715: 'upisispred': not all control paths return a value
   struktureZad2dom.vcxproj -> C:\Users\borna\OneDrive\Radna površina\git\strukture\struktureZad2dom\x64\Debug\struktureZad2dom.exe

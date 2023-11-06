@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include<string.h>
 #define MAXDUZINA 80
+#define MAXDUZINADAT 1024
 
 
 
@@ -24,12 +25,17 @@ int trazi(pozicija, char[MAXDUZINA]);
 int brisi(pozicija, char[MAXDUZINA]);
 int upisiza(pozicija, char[MAXDUZINA], char[MAXDUZINA], int, char[MAXDUZINA]);
 int upisispred(pozicija p, char ime[MAXDUZINA], char prez[MAXDUZINA], int god, char imef[MAXDUZINA]);
-int sort(pozicija p);
+int sort(pozicija glavni);
+int upisDatoteka(pozicija glavni);
+int citanjeDatoteke(pozicija glavni);
 
 int main(){
 
 	osoba head;
 	head.next = NULL;
+
+	osoba head1;
+	head1.next = NULL;
 
 	upisnapocetak(&head, "ime1", "prezime1", 0001);
 	upisnapocetak(&head, "ime2", "prezime2", 0002);
@@ -46,6 +52,12 @@ int main(){
 	upisispred(&head, "ime7", "prezime7", 0007, "ime3");
 	printf("\n");
 	ispis(head.next);
+	sort(&head);
+	printf("\n sortiranje\n");
+	ispis(head.next);
+	upisDatoteka(head.next);
+	citanjeDatoteke(&head1);
+	ispis(head1.next);
 
 	return 0;
 }
@@ -211,9 +223,98 @@ int upisispred(pozicija p, char ime[MAXDUZINA], char prez[MAXDUZINA], int god, c
 
 }
 
-int sort(pozicija p) {
+int sort(pozicija glavni) {
+	pozicija  temp = NULL, petlja = glavni->next, end = NULL,prev=glavni;
 
-	for (int i = 0; (p + i) != NULL; i++) {
+
+	while (glavni->next!=end) {
+		petlja = glavni->next;
+		prev = glavni;
+
+		while (petlja->next != end) {
+
+			if (strcmp(petlja->prezime, petlja->next->prezime) > 0) {
+				temp = petlja->next;
+				petlja->next = temp->next;
+				temp->next = petlja;
+				prev->next = temp;
+
+				petlja = temp;
+			}
+			prev = petlja;
+			petlja = petlja->next;
+		}
+		end = petlja;
+		
 
 	}
+	return 0;
+}
+
+int upisDatoteka(pozicija glavni) {
+	FILE* datoteka = NULL;
+
+
+	datoteka = fopen("Text.txt", "w");
+	if (datoteka == NULL) {
+		return -1;
+	}
+
+	fprintf(datoteka,"IME:\t PREZIME:\t GODINA:   \n");
+	while (glavni!=NULL) {
+		fprintf(datoteka, "%s\t %s\t %d   \n",glavni->ime,glavni->prezime,glavni->god );
+		glavni = glavni->next;
+	}
+	fclose(datoteka);
+
+	return 1;
+}
+
+int citanjeDatoteke(pozicija glavni) {
+
+	FILE* datoteka = NULL;
+	int brojR = 0;
+	pozicija new;
+	char buffer[MAXDUZINADAT];
+
+	datoteka = fopen("citanje.txt", "r");
+	if (datoteka == NULL) {
+		return -1;
+	}
+
+	
+		while (fscanf(datoteka, "%s", buffer) == 1) {
+		
+		brojR++;
+	}
+
+		rewind(datoteka);
+
+		
+
+		for (int i = 0; i < brojR; i++) {
+			
+			new = (pozicija)malloc(sizeof(osoba));
+			if (new == NULL) {
+				printf("greška pri alociranju memorije");
+				return -1;
+			}
+			while (glavni->next != NULL) {
+				glavni = glavni->next;
+			}
+
+			new->next = glavni->next;
+			glavni->next = new;
+
+			if (fscanf(datoteka, "%s %s %d", new->ime, new->prezime, &new->god) != 3) {
+				printf("greška u citanju");
+				return -1;
+			}
+			
+			
+		}
+
+		fclose(datoteka);
+		return 1;
+
 }
