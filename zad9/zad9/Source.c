@@ -24,7 +24,7 @@ int main()
 	node root = NULL;
 
 	FILE* fptr = NULL;
-	fptr = fopen("C:\\Users\\Ivan\\Desktop\\datoteka.txt", "w");
+	fptr = fopen("C:\\Users\\zad9\\Desktop\\datoteka.txt", "w");
 	if (fptr == NULL)
 	{
 		printf("Neuspjesno otvaranje datoteke");
