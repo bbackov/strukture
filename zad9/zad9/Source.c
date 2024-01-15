@@ -56,7 +56,7 @@ node inserthub(node root)
 	return root;
 }
 
-node insert(node root, int x)
+/**/node insert(node root, int x)
 {
 	if (root == NULL)
 	{
